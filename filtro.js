@@ -1,12 +1,14 @@
 const miembros = [
-  "RicardoBTC",
-  "CuentaSecundaria"
+  "Cuenta Secundaria",
+  "RicardoBTC"
 ];
 
 window.addEventListener("onEventReceived", function (obj) {
+  if (!obj || !obj.detail) return;
+
   const d = obj.detail;
-  if (!d?.message || !d.nick) return;
-  if (!miembros.includes(d.nick)) {
-    d.tts = false; // Desactiva voz
-  }
+  const esMiembro = miembros.includes(d.nick);
+
+  // Solo permite TTS si es miembro
+  d.tts = esMiembro;
 });
